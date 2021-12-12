@@ -16,9 +16,9 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('publication')->nullable()->default('text');
-            $table->text('content')->nullable();
-            $table->enum('state', ['received','in_evaluation','acepted'])->nullable()->default('received');
-            $table->bigInteger('category_id')->nullable();
+            $table->text('Publication_content')->nullable();
+            $table->enum('state', ['Publicado','Rechazado','Revisión','Recibido'])->nullable()->default('Revisión');
+            $table->bigInteger('category_id')->nullable() ->unsigned ();
             $table->timestamps();
         });
     }

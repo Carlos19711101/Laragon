@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostStore;
+use App\Models\category;
 use App\Models\post;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return view('dashboard.post.index');
     }
 
     /**
@@ -24,7 +27,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = category::pluck('id','category_name');
+        return view('doshboard.post.create', ['post' => new post(),'categories' => $categories]);
     }
 
     /**
@@ -33,9 +37,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        Post::create($request->validated());
+        return back()->with('status','Publicacion creada con exito');
     }
 
     /**
@@ -46,7 +51,7 @@ class PostController extends Controller
      */
     public function show(post $post)
     {
-        //
+        return view('dashboard.post.show', ['post' => $post]);
     }
 
     /**
@@ -57,7 +62,7 @@ class PostController extends Controller
      */
     public function edit(post $post)
     {
-        //
+        return view('dashboard.post.edit', ['post' => $post]);
     }
 
     /**
@@ -67,9 +72,10 @@ class PostController extends Controller
      * @param  \App\Models\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, post $post)
+    public function update(PostRequest $request, post $post)
     {
-        //
+        $post->update($request -> validate());
+        return back()->with('status','Publicacion editada con exito');
     }
 
     /**
@@ -80,6 +86,7 @@ class PostController extends Controller
      */
     public function destroy(post $post)
     {
-        //
+        $post->delete();
+        return back()->with('status','Publicacion eliminada con exito');
     }
 }

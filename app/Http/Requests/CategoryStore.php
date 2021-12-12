@@ -13,7 +13,7 @@ class CategoryStore extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class CategoryStore extends FormRequest
     public function rules()
     {
         return [
-            //
+           'category'=>'require|min 4|max 50',
+           'description_category'=>'require|min3|max 250'
         ];
     }
 }
